@@ -1,0 +1,48 @@
+*{
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#667eea;
+}
+
+form{
+    background:#fff;
+    padding:25px;
+    width:320px;
+    border-radius:8px;
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:8px;
+    margin:6px 0 15px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+input:focus{
+    border-color:#1f243b;
+    outline:none;
+}
+
+button,input[type=submit]{
+    width:100%;
+    padding:8px;
+    background:#161820;
+    color:#fff;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}

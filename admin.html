@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+
+<style>
+  /* Light theme */
+  :root{
+    --bg: white;
+    --text: black;
+    --box: #f2f2f2;
+  }
+
+  /* Dark theme */
+  .dark{
+    --bg: #121212;
+    --text: white;
+    --box: #1e1e1e;
+  }
+
+  body{
+    margin: 0;
+    font-family: Arial;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .dashboard{
+    display: grid;
+    grid-template-areas:
+      "header header"
+      "menu content"
+      "footer footer";
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 60px 1fr 40px;
+    height: 100vh;
+  }
+
+  header{
+    grid-area: header;
+    background: var(--box);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  aside{
+    grid-area: menu;
+    background: var(--box);
+    padding: 15px;
+  }
+
+  main{
+    grid-area: content;
+    padding: 15px;
+  }
+
+  footer{
+    grid-area: footer;
+    background: var(--box);
+    text-align: center;
+    line-height: 40px;
+  }
+
+  button{
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+  <header>
+    <h3>Admin Dashboard</h3>
+    <button onclick="toggleTheme()">Toggle Theme</button>
+  </header>
+
+  <aside>
+    <p>Dashboard</p>
+    <p>Users</p>
+    <p>Reports</p>
+  </aside>
+
+  <main>
+    <h4>Welcome Admin</h4>
+    <p>This is content area</p>
+  </main>
+
+  <footer>
+    Admin Panel © 2026
+  </footer>
+</div>
+
+<script>
+
+  if(localStorage.getItem("theme") === "dark"){
+    document.body.classList.add("dark");
+  }
+
+  function toggleTheme(){
+    document.body.classList.toggle("dark");
+
+    if(document.body.classList.contains("dark")){
+      localStorage.setItem("theme","dark");
+    } else {
+      localStorage.setItem("theme","light");
+    }
+  }
+</script>
+
+</body>
+</html>
