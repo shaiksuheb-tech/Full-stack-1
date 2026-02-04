@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body { text-align:center; font-family:Arial; }
+svg { width:90vw; height:70vh; border:2px solid black; }
+</style>
+</head>
+
+<body>
+
+<select id="shape">
+  <option value="free">Freehand</option>
+  <option value="rect">Rectangle</option>
+  <option value="circle">Circle</option>
+</select>
+
+<input type="color" id="color" value="#000000">
+<button onclick="undo()">Undo</button>
+
+<svg id="canvas"></svg>
+
+<script>
+const svg = document.getElementById("canvas");
+let drawing=false, startX, startY, shape, history=[];
+
+function pos(e){
+  let r = svg.getBoundingClientRect();
+  return {x:e.clientX-r.left, y:e.clientY-r.top};
+}
+
+svg.onmousedown = e => {
+  drawing=true;
+  let p = pos(e);
+  startX=p.x; startY=p.y;
+  let type=document.getElementById("shape").value;
+  let color=document.getElementById("color").value;
+
+  if(type==="rect"){
+    shape=document.createElementNS("http://www.w3.org/2000/svg","rect");
+    shape.setAttribute("x",startX);
+    shape.setAttribute("y",startY);
+    shape.setAttribute("width",0);
+    shape.setAttribute("height",0);
+  }
+  else if(type==="circle"){
+    shape=document.createElementNS("http://www.w3.org/2000/svg","circle");
+    shape.setAttribute("cx",startX);
+    shape.setAttribute("cy",startY);
+    shape.setAttribute("r",0);
+  }
+  else{
+    shape=document.createElementNS("http://www.w3.org/2000/svg","polyline");
+    shape.setAttribute("points",`${startX},${startY}`);
+    shape.setAttribute("fill","none");
+  }
+
+  shape.setAttribute("stroke",color);
+  shape.setAttribute("fill","transparent");
+  svg.appendChild(shape);
+  history.push(shape);
+};
+
+svg.onmousemove = e => {
+  if(!drawing) return;
+  let p = pos(e);
+  let type=document.getElementById("shape").value;
+
+  if(type==="rect"){
+    shape.setAttribute("width",p.x-startX);
+    shape.setAttribute("height",p.y-startY);
+  }
+  else if(type==="circle"){
+    let r=Math.hypot(p.x-startX,p.y-startY);
+    shape.setAttribute("r",r);
+  }
+  else{
+    let pts=shape.getAttribute("points");
+    shape.setAttribute("points",pts+` ${p.x},${p.y}`);
+  }
+};
+
+svg.onmouseup = ()=> drawing=false;
+
+function undo(){
+  if(history.length){
+    svg.removeChild(history.pop());
+  }
+}
+</script>
+
+</body>
+</html>

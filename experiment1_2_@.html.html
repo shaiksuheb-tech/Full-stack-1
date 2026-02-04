@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Product Filter</title>
+</head>
+
+<body>
+    <h1>Filter Product</h1>
+
+    <strong><label>Filter by : </label></strong>
+    <select id="CategoryFilter">
+        <option value="all">All</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Clothes">Clothes</option>
+        <option value="Cosmetics">Cosmetics</option>
+    </select>
+
+    <div class="card" data-category="Electronics">
+        <h2>Headphones</h2>
+        <p>$39</p>
+        <p>Electronics</p>
+    </div>
+
+    <div class="card" data-category="Clothes">
+        <h2>T shirts</h2>
+        <p>$10</p>
+        <p>Clothes</p>
+    </div>
+
+    <div class="card" data-category="Cosmetics">
+        <h2>Mens face wash</h2>
+        <p>$9</p>
+        <p>Cosmetics</p>
+    </div>
+
+    <script>
+        let filterDropdown = document.getElementById("CategoryFilter");
+        let productCards = document.querySelectorAll(".card");
+
+        filterDropdown.addEventListener("change", function () {
+            const selectedCategory = this.value;
+
+            productCards.forEach(card => {
+                const cardCategory = card.getAttribute("data-category");
+
+                if (selectedCategory === "all" || selectedCategory === cardCategory) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
